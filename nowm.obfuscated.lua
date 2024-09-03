@@ -97,8 +97,8 @@ function pnb(m)
                         objects = getWorldObject()
                         mainpos = getLocal().pos
                         for _, v in pairs(objects) do
-                            objectX, objectY = math.floor((v.pos.x + 9) / 32), math.floor((v.pos.y + 9) / 32)
-                            playerX, playerY = math.floor((mainpos.x + 10) / 32), math.floor((mainpos.y + 15) / 32)
+                            objectX, objectY = (v.pos.x + 9) // 32, (v.pos.y + 9) // 32
+                            playerX, playerY = (mainpos.x + 10) // 32, (mainpos.y + 15) // 32
                             if objectX == (playerX + i) and objectY == (playerY - 2) then
                                 sendCollect(v)
                             end
