@@ -16,7 +16,7 @@ function spr(a, b, c, d)
 end
 
 function sendCollect(a)
-    tx = math.floor(a.pos.y/32) == 0 and (a.pos.x + 6) or (a.pos.x + 6 + 32 * math.floor(a.pos.y/32))
+    tx = a.pos.y//32 == 0 and (a.pos.x + 6) or (a.pos.x + 6 + 32 * (a.pos.y//32)
     pkt = {
         type = 11,
         value = a.oid,
