@@ -28,6 +28,21 @@ function sendCollect(a)
     sendPacketRaw(false, pkt)
 end
 
+function collect(n)
+    if pcall(
+            function()
+                for k, v in pairs(getWorldObject()) do
+                local dx, dy = math.abs(v.pos.x // 32 - getLocal().pos.x // 32), math.abs(v.pos.y // 32 - getLocal().pos.y // 32)
+                    if dx <= 5 and dy <= 5 then
+                        sendCollect(v)
+                    end
+                end
+            end
+        ) == false then
+        return 
+    end
+end
+
 function Log(a)
     logToConsole("`0[`#Dr.Rhy Universe`0][`1PnB`0] `5"..a)
 end
@@ -94,16 +109,9 @@ function pnb(m)
                 for _, i in ipairs(tilecount) do
                     breakX, breakY = math.floor(getLocal().pos.x/32) + i, math.floor(getLocal().pos.y/32) - 2
                     if checkTile(breakX, breakY).fg ~= m then
-                        objects = getWorldObject()
-                        mainpos = getLocal().pos
-                        for _, v in pairs(objects) do
-                            objectX, objectY = (v.pos.x + 9) // 32, (v.pos.y + 9) // 32
-                            playerX, playerY = (mainpos.x + 10) // 32, (mainpos.y + 15) // 32
-                            if objectX == (playerX + i) and objectY == (playerY - 2) then
-                                sendCollect(v)
-                            end
+                        if auto_collect then
+                            collect()
                         end
-                        ds(delay_place)
                         requestTileChange(breakX, breakY, m)
                         ds(delay_place)
                     else
