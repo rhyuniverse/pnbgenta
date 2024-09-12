@@ -104,32 +104,37 @@ end)
 tilecount = {1, 2}
 
 function pnb(m)
+    local function handleTile(breakX, breakY)
+        if checkTile(breakX, breakY).fg ~= m then
+            if auto_collect then
+                collect()
+            end
+            requestTileChange(breakX, breakY, m)
+            ds(delay_place)
+        else
+            requestTileChange(breakX, breakY, 18)
+            ds(delay_break)
+        end
+    end
+
     repeat
-        if inv((m+1)) < 180 then
+        if inv(m+1) < 180 then
             if cek(break_x, break_y) then
                 for _, i in ipairs(tilecount) do
-                    breakX, breakY = math.floor(getLocal().pos.x/32) + i, math.floor(getLocal().pos.y/32)
-                    if checkTile(breakX, breakY).fg ~= m then
-                        if auto_collect then
-                            collect()
-                        end
-                        requestTileChange(breakX, breakY, m)
-                        ds(delay_place)
-                    else
-                        requestTileChange(breakX, breakY, 18)
-                        ds(delay_break)
-                    end
+                    local breakX = math.floor(getLocal().pos.x / 32) + i
+                    local breakY = math.floor(getLocal().pos.y / 32)
+                    handleTile(breakX, breakY)
                 end
             else
                 findPath(break_x, break_y)
                 ds(1000)
             end
         else
-            Log("Dropping `1"..getItemByID((block_id + 1)).name)
+            Log("Dropping `1"..getItemByID(m + 1).name)
             findPath(drop_x, drop_y)
             ds(1000)
             if cek(drop_x, drop_y) then
-                drop((m+1))
+                drop(m+1)
             else
                 findPath(drop_x, drop_y)
                 ds(1000)
