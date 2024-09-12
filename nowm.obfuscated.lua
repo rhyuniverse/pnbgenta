@@ -2,6 +2,14 @@ function ds(s)
     sleep(math.random(s, s+100))
 end
 
+function runCoroutine(func)
+    local co = coroutine.create(func)
+    local success, err = coroutine.resume(co)
+    if not success then
+        logToConsole("Error in coroutine:", err)
+    end
+end
+
 function inv(itemid)
     for _, item in pairs(getInventory()) do
         if item.id == itemid then
@@ -101,7 +109,9 @@ function pnb(m)
     local function handleTile(breakX, breakY)
         if checkTile(breakX, breakY).fg ~= m then
             if auto_collect then
-                collect()
+                runCoroutine(function()
+                    collect()
+                end)
             end
             requestTileChange(breakX, breakY, m)
             ds(delay_place)
