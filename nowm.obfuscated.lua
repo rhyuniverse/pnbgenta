@@ -29,19 +29,13 @@ function sendCollect(a)
 end
 
 function collect(n)
-    if pcall(
-            function()
-                for k, v in pairs(getWorldObject()) do
-                local dx, dy = math.abs(v.pos.x // 32 - getLocal().pos.x // 32), math.abs(v.pos.y // 32 - getLocal().pos.y // 32)
-                    if dx <= 5 and dy <= 5 then
-                        sendCollect(v)
-                    end
-                end
-                return
-            end
-        ) == false then
-        return 
+    for k, v in pairs(getWorldObject()) do
+    local dx, dy = math.abs(v.pos.x // 32 - getLocal().pos.x // 32), math.abs(v.pos.y // 32 - getLocal().pos.y // 32)
+        if dx <= 3 and dy <= 3 then
+            sendCollect(v)
+        end
     end
+    return
 end
 
 function Log(a)
