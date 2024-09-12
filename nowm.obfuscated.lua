@@ -101,14 +101,14 @@ AddHook("OnVarlist", "rhy_hook", function(v)
     return false
 end)
 
-tilecount = {-2, -1, 0, 1, 2}
+tilecount = {1, 2}
 
 function pnb(m)
     repeat
         if inv((m+1)) < 180 then
             if cek(break_x, break_y) then
                 for _, i in ipairs(tilecount) do
-                    breakX, breakY = math.floor(getLocal().pos.x/32) + i, math.floor(getLocal().pos.y/32) - 2
+                    breakX, breakY = math.floor(getLocal().pos.x/32) + i, math.floor(getLocal().pos.y/32)
                     if checkTile(breakX, breakY).fg ~= m then
                         if auto_collect then
                             collect()
