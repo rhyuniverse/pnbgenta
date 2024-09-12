@@ -184,10 +184,10 @@ function AvoidError()
         function()
             main(block_id)
         end) == false then
-        Sleep(100)
+        sleep(100)
         AvoidError()
     end
-    Sleep(100)
+    sleep(100)
     AvoidError()
 end
 
