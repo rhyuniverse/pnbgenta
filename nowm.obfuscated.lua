@@ -103,7 +103,10 @@ AddHook("OnVarlist", "rhy_hook", function(v)
     return false
 end)
 
-tilecount = {1, 2}
+tilecount = {
+    {-2,-2}, {-1,-2}, {0,-2}, {1,-2}, {2,-2},
+    {2,-1}, {1,-1}, {0,-1}, {-1,-1}, {-2,-1}
+}
 
 function pnb(m)
     local function handleTile(breakX, breakY)
@@ -125,8 +128,8 @@ function pnb(m)
         if inv(m+1) < 180 then
             if cek(break_x, break_y) then
                 for _, i in ipairs(tilecount) do
-                    local breakX = math.floor(getLocal().pos.x / 32) + i
-                    local breakY = math.floor(getLocal().pos.y / 32)
+                    local breakX = math.floor(getLocal().pos.x / 32) + i[1]
+                    local breakY = math.floor(getLocal().pos.y / 32) + i[2]
                     handleTile(breakX, breakY)
                 end
             else
